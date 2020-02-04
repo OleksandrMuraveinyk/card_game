@@ -1,7 +1,7 @@
     // const suits = ['spade', 'heart', 'diamond', 'club'];
     // const cards = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
-    const suits = ['diamond', 'club'];
-    const cards = ['10', 'J', 'Q', 'K', 'A'];
+    const suits = ['diamond', 'club', 'heart'];
+    const cards = ['10', 'J', ];
     
     const indexGeneration = cardType => {
         return Math.round(0.5 + Math.random() * cardType.length - 1);
@@ -77,7 +77,30 @@
         cardRendering(hand, identificator, playerSection);
     };
 
-    pairDetecting()
+    const pairDetecting = (hand, className) => {
+        const allCardsInHand = [];
+        for (let i = 0; i < hand.length; i++) {
+            allCardsInHand.push(hand[i].card);
+        };
+        // console.log(allCardsInHand);
+        allCardsInHand.sort();
+        console.log(allCardsInHand);
+
+        const isPairArr = [];
+
+        const compare = allCardsInHand => {
+            for (let i = 0; i < allCardsInHand.length; i++) {
+                if (allCardsInHand[i] == allCardsInHand[i-1]){
+                    isPairArr.push(allCardsInHand[i]); 
+                    isPairArr.push(allCardsInHand[i-1]);
+                    
+                }
+            }
+        }
+        compare(allCardsInHand);
+        console.log(isPairArr);
+
+    }
 
     const handsSetGeneration = () => {
         const handOne = handsGeneration(suits, cards, 5);
@@ -86,8 +109,8 @@
         console.log(handOne);
         console.log(handTwo);
 
-        pairDetecting(handOne);
-        pairDetecting(handTwo);
+        pairDetecting(handOne, '.card.pair0');
+        pairDetecting(handTwo, '.card.pair1');
 
         handsRendering(handOne, 'handOne', 'one');
         handsRendering(handTwo, 'handTwo', 'two');
