@@ -10,21 +10,6 @@
     const handsGeneration = (suits, cards, cardQuantity) => {
          
         const hand = [];
-    //     const cardSolution = {
-    //         diamond: {},
-    //         club: {},
-    //         spade: {},
-    //         heart: {},
-    //     };
-
-    //     suits.forEach((suit) => {
-    //         while(hand.length < cardQuantity) {
-
-    //         }
-    //     })
-
-
-    // };
         while (hand.length < cardQuantity) {
                     const suitsIndex = indexGeneration(suits);
                     const cardsIndex = indexGeneration(cards);
