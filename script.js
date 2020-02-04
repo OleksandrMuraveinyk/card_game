@@ -62,7 +62,8 @@
         cardRendering(hand, identificator, playerSection);
     };
 
-    const pairDetecting = (hand, className) => {
+    const pairDetecting = (hand, classNameFirstPair, classNameSecondPair) => {
+        const pairsArr = [];
         hand.sort((a, b) => a.card > b.card ? 1 : -1);
         
         console.log(hand);
@@ -78,57 +79,32 @@
 
         console.log(hand);
 
-
-
-        // const allCardsInHand = [];
-        // for (let i = 0; i < hand.length; i++) {
-        //     allCardsInHand.push(hand[i].card);
-        // };
-        // // console.log(allCardsInHand);
-        // allCardsInHand.sort();
-        // console.log(allCardsInHand);
-
-        // const isPairArr = [];
-
-        // const compare = allCardsInHand => {
-        //     // for (let i = 0; i < allCardsInHand.length; i++) {
-        //     //     if (allCardsInHand[i] == allCardsInHand[i-1]){
-        //     //         isPairArr.push(allCardsInHand[i]); 
-        //     //         isPairArr.push(allCardsInHand[i-1]);
-                   
-        //     //     }
-        //     // }
-        
-
-        //     // for (let i = 0; i < allCardsInHand.length; i++){
-        //     //     for (let j = i + 1; j < allCardsInHand.length; i++) {
-        //     //         if (allCardsInHand[i] == allCardsInHand[i-1]){
-                        
-        //     //             if(!isPairArr.includes(allCardsInHand[i])){
-        //     //                 isPairArr.push(allCardsInHand[i]);
-        //     //             }
-        //     //         }
-        //     //     }
-        //     // }
-        // }   
-        // compare(allCardsInHand);
-        // console.log(isPairArr);
-
+        for (let i = 0; i < hand.length; i++) {
+            if(hand[i].isPair == true) {
+                pairsArr.push(hand[i]);  
+            }
+        }
+        console.log(pairsArr);
+////////////////////////////////////////////////////////////
+        if (pairsArr.length <=3) {
+            const needMarkingElem = 
+        }
     }
 
     const handsSetGeneration = () => {
         const handOne = handsGeneration(suits, cards, 5);
-        // const handTwo = handsGeneration(suits, cards, 5);
+        const handTwo = handsGeneration(suits, cards, 5);
 
         console.log(handOne);
-        // console.log(handTwo);
+        console.log(handTwo);
 
-        pairDetecting(handOne, '.card.pair0');
-        // pairDetecting(handTwo, '.card.pair1');
+        pairDetecting(handOne, '.card.pair0', '.card.pair1');
+        pairDetecting(handTwo, '.card.pair0', '.card.pair1');
 
         handsRendering(handOne, 'handOne', 'one');
         handsRendering(handTwo, 'handTwo', 'two');
 
+        
     };
 
    
