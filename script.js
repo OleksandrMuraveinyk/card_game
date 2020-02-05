@@ -114,7 +114,8 @@
                     hand[j].isSecondPair = false;
                     firstPair.push(hand[i]);
                     firstPair.push(hand[j]);
-                } else if (hand[i].card == hand[j].card && firstPair.length >= 2 && firstPair.length <= 3 && secondPair.length <= 3) {
+                    // if .... irstPair.length == 0
+                } else if (hand[i].card == hand[j].card && firstPair.length >= 2 && firstPair.length <= 3 && secondPair.length <= 2) {
                     hand[i].isPair = true;
                     hand[j].isPair = true;
                     hand[i].isSecondPair = true;
