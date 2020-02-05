@@ -119,82 +119,81 @@
 
         }
         
-        for (let j = 0; j < pairsArr.length; j++){
-            if(pairsArr.length == 5){
-                if(pairsArr[1].card == pairsArr[2].card){
-                    if(j <= 2) {
-                        if(j < 2) {
-                            pairsArr[j].isFirstPair = true;
-                            pairsArr[j].isSecondPair = false;
-                            firstPair.push(pairsArr[j]);
-                        }
-                    } else{
-                        pairsArr[j].isFirstPair = false;
-                        pairsArr[j].isSecondPair = true; 
-                        secondPair.push(pairsArr[j]);
-                    }
-                }else{
-                    if(j >= 2) {
-                        if (j > 2){
-                            pairsArr[j].isFirstPair = false;
-                            pairsArr[j].isSecondPair = true;
-                            secondPair.push(pairsArr[j]);
-                        }
-                    } else{
-                        pairsArr[j].isFirstPair = true;
-                        pairsArr[j].isSecondPair = false; 
-                        firstPair.push(pairsArr[j]);
-                    }
-                } 
-            } else 
+        // for (let j = 0; j < pairsArr.length; j++){
+        //     if(pairsArr.length == 5){
+        //         if(pairsArr[1].card == pairsArr[2].card){
+        //             if(j <= 2) {
+        //                 if(j < 2) {
+        //                     pairsArr[j].isFirstPair = true;
+        //                     pairsArr[j].isSecondPair = false;
+        //                     firstPair.push(pairsArr[j]);
+        //                 }
+        //             } else{
+        //                 pairsArr[j].isFirstPair = false;
+        //                 pairsArr[j].isSecondPair = true; 
+        //                 secondPair.push(pairsArr[j]);
+        //             }
+        //         }else{
+        //             if(j >= 2) {
+        //                 if (j > 2){
+        //                     pairsArr[j].isFirstPair = false;
+        //                     pairsArr[j].isSecondPair = true;
+        //                     secondPair.push(pairsArr[j]);
+        //                 }
+        //             } else{
+        //                 pairsArr[j].isFirstPair = true;
+        //                 pairsArr[j].isSecondPair = false; 
+        //                 firstPair.push(pairsArr[j]);
+        //             }
+        //         } 
+        //     } else 
             
-            if(pairsArr.length == 4){
-                if(j < 2){
-                    pairsArr[j].isFirstPair = true;
-                    pairsArr[j].isSecondPair = false;
-                    firstPair.push(pairsArr[j]);
-                }else if (j > 1){
-                    pairsArr[j].isFirstPair = false;
-                    pairsArr[j].isSecondPair = true;
-                    secondPair.push(pairsArr[j]);
-                }
-            }
-            else 
+        //     if(pairsArr.length == 4){
+        //         if(j < 2){
+        //             pairsArr[j].isFirstPair = true;
+        //             pairsArr[j].isSecondPair = false;
+        //             firstPair.push(pairsArr[j]);
+        //         }else if (j > 1){
+        //             pairsArr[j].isFirstPair = false;
+        //             pairsArr[j].isSecondPair = true;
+        //             secondPair.push(pairsArr[j]);
+        //         }
+        //     }
+        //     else 
             
-            if(pairsArr.length <= 3) {
-                if(j < 2){
-                pairsArr[j].isFirstPair = true;
-                pairsArr[j].isSecondPair = false;
-                firstPair.push(pairsArr[j]);
-            }
-            } 
-        }
-        if (firstPair.length > 0) {
-            hand.handPairs.push(firstPair);
-        }
-        if (secondPair.length > 0) {
-            hand.handPairs.push(secondPair);
-        }
+        //     if(pairsArr.length <= 3) {
+        //         if(j < 2){
+        //         pairsArr[j].isFirstPair = true;
+        //         pairsArr[j].isSecondPair = false;
+        //         firstPair.push(pairsArr[j]);
+        //     }
+        //     } 
+        // }
+        // if (firstPair.length > 0) {
+        //     hand.handPairs.push(firstPair);
+        // }
+        // if (secondPair.length > 0) {
+        //     hand.handPairs.push(secondPair);
+        // }
 
     };
 
-    const winnerDetermination = (handOne, handTwo) => {
-        if (handOne.handPairs.length > handTwo.handPairs.length) {
-            for (let i = 0; i < handOne.length; i++) {
-                if (handOne[i].isPair == true){
-                    handOne[i].isInWinningCombination = true;
-                }
-                
-            }
-        }
-        if (handTwo.handPairs.length > handOne.handPairs.length) {
-            for (let i = 0; i < handOne.length; i++) {
-                if (handTwo[i].isPair == true){
-                    handTwo[i].isInWinningCombination = true;
-                }
-            }
-        }
-    };
+    const loop = hand => {
+    for (let i = 0; i < hand.length; i++) {
+        hand[i].isInWinningCombination = true;
+    }
+};
+
+const winnerDetermination = (handOne, handTwo) => {
+    const { handPairs: handPairsOne } = handOne;
+    const { handPairs: handPairsTwo } = handTwo; 
+
+    (handPairsOne > handPairsTwo) ? (
+        loop(handOne)
+    ) : (handPairsOne < handPairsTwo) ? (
+        loop(handTwo)
+    ) : null;
+};
 
     const handsSetGeneration = () => {
         const allHands = handsGeneration(suits, cards, 10);
