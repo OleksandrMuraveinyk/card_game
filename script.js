@@ -1,7 +1,7 @@
-    // const suits = ['spade', 'heart', 'diamond', 'club'];
-    // const cards = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
-    const suits = ['diamond', 'club', 'heart'];
-    const cards = ['10', 'J', '2', '3', '4','5', '6',];
+    const suits = ['spade', 'heart', 'diamond', 'club'];
+    const cards = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
+    // const suits = ['diamond', 'club',];
+    // const cards = ['10', 'J', '2', '3','Q', 'K', 'A'];
     
     const indexGeneration = cardType => {
         return Math.round(0.5 + Math.random() * cardType.length - 1);
@@ -17,7 +17,6 @@
             cardSolution.suit = suits[suitsIndex];
             cardSolution.card = cards[cardsIndex];
             cardSolution.url = `http://h3h.net/images/cards/${suits[suitsIndex]}_${cards[cardsIndex]}.svg`;
-            cardSolution.isPair = false;
             cardSolution.isFirstPair = false;
             cardSolution.isSecondPair = false;
             cardSolution.isInWinningCombination = false;
@@ -55,8 +54,6 @@
         if (divBlock) {
             divBlock.remove()
         }
-        
-        
     };
 
     const cardRendering = (hand, handName, identificator, playerSection, firstPairClassName, secondPairClassName, winningClassName) => {
@@ -68,7 +65,6 @@
         for (let i = 0; i < hand.length; i++) {
             const image = document.createElement('img');
             image.src = hand[i].url;
-            image.setAttribute('data_isPair', `${hand[i].isPair}`);
             if (hand[i].isFirstPair == true){
                 image.classList.add(firstPairClassName);
             }
@@ -96,7 +92,7 @@
     };
 
     const pairDetecting = (hand) => {
-        // const pairsArr = [];
+        const pairsArr = [];
         const firstPair = [];
         const secondPair = [];
         hand.handPairs = [];
@@ -105,100 +101,37 @@
         
         for (let i = 0; i < hand.length; i++) {
             for (let j = i + 1; j < hand.length; j++) {
-                if(hand[i].card == hand[j].card && firstPair.length == 0) {
-                    hand[i].isPair = true;
-                    hand[j].isPair = true;
-                    hand[i].isFirstPair = true;
-                    hand[j].isFirstPair = true;
-                    hand[i].isSecondPair = false;
-                    hand[j].isSecondPair = false;
-                    firstPair.push(hand[i]);
-                    firstPair.push(hand[j]);
-                    // if .... irstPair.length == 0
-                } else if (hand[i].card == hand[j].card && firstPair.length >= 2 && firstPair.length <= 3 && secondPair.length <= 2) {
-                    hand[i].isPair = true;
-                    hand[j].isPair = true;
-                    hand[i].isSecondPair = true;
-                    hand[j].isSecondPair = true;
-                    hand[i].isFirstPair = false;
-                    hand[j].isFirstPair = false;
-                    secondPair.push(hand[i]);
-                    secondPair.push(hand[j]);
-                    
+                if (hand[i].card == hand[j].card) {
+                    pairsArr.push(hand[i]);
+                    pairsArr.push(hand[j]); 
                 }
             } 
         }
+       
+        for (let i = 0; i < pairsArr.length; i++) {
+            if (pairsArr[0].card == pairsArr[i].card) {
+                firstPair.push(pairsArr[i]);
+            } else {
+                secondPair.push(pairsArr[i]);
+            }
+        }
 
-        if (firstPair.length > 0) {
+        if (firstPair.length > 0 || secondPair.length > 0) {
+            firstPair.length = 2;
+            secondPair.length = 2;
+
+            firstPair.forEach(element => {
+                element.isFirstPair = true;
+            });
+            
+            secondPair.forEach(element => {
+                element.isSecondPair = true;
+            });
+            hand.handPairs.push(secondPair);
             hand.handPairs.push(firstPair);
         }
-        if (secondPair.length > 0) {
-            hand.handPairs.push(secondPair);
-        }
-
     }
-        
-        // for (let i = 0; i < hand.length; i++) {
-        //     if(hand[i].isPair == true) {
-        //         pairsArr.push(hand[i]); 
-        //     }
-
-        // }
-        
-        // for (let j = 0; j < pairsArr.length; j++){
-        //     if(pairsArr.length == 5){
-        //         if(pairsArr[1].card == pairsArr[2].card){
-        //             if(j <= 2) {
-        //                 if(j < 2) {
-        //                     pairsArr[j].isFirstPair = true;
-        //                     pairsArr[j].isSecondPair = false;
-        //                     firstPair.push(pairsArr[j]);
-        //                 }
-        //             } else{
-        //                 pairsArr[j].isFirstPair = false;
-        //                 pairsArr[j].isSecondPair = true; 
-        //                 secondPair.push(pairsArr[j]);
-        //             }
-        //         }else{
-        //             if(j >= 2) {
-        //                 if (j > 2){
-        //                     pairsArr[j].isFirstPair = false;
-        //                     pairsArr[j].isSecondPair = true;
-        //                     secondPair.push(pairsArr[j]);
-        //                 }
-        //             } else{
-        //                 pairsArr[j].isFirstPair = true;
-        //                 pairsArr[j].isSecondPair = false; 
-        //                 firstPair.push(pairsArr[j]);
-        //             }
-        //         } 
-        //     } else 
-            
-        //     if(pairsArr.length == 4){
-        //         if(j < 2){
-        //             pairsArr[j].isFirstPair = true;
-        //             pairsArr[j].isSecondPair = false;
-        //             firstPair.push(pairsArr[j]);
-        //         }else if (j > 1){
-        //             pairsArr[j].isFirstPair = false;
-        //             pairsArr[j].isSecondPair = true;
-        //             secondPair.push(pairsArr[j]);
-        //         }
-        //     }
-        //     else 
-            
-        //     if(pairsArr.length <= 3) {
-        //         if(j < 2){
-        //         pairsArr[j].isFirstPair = true;
-        //         pairsArr[j].isSecondPair = false;
-        //         firstPair.push(pairsArr[j]);
-        //     }
-        //     } 
-        // }
-        
-
-    // };
-
+      
     const loop = hand => {
     for (let i = 0; i < hand.length; i++) {
         hand[i].isInWinningCombination = true;
@@ -225,8 +158,11 @@ const winnerDetermination = (handOne, handTwo) => {
         console.log(handOne);
         console.log(handTwo);
 
-        pairDetecting(handOne);
-        pairDetecting(handTwo);
+        const mutableHandOne = handOne.slice(0);
+        const mutableHandTwo = handTwo.slice(0);
+
+        pairDetecting(mutableHandOne);
+        pairDetecting(mutableHandTwo);
 
         winnerDetermination(handOne, handTwo);
 
