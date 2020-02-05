@@ -96,7 +96,7 @@
     };
 
     const pairDetecting = (hand) => {
-        const pairsArr = [];
+        // const pairsArr = [];
         const firstPair = [];
         const secondPair = [];
         hand.handPairs = [];
@@ -105,19 +105,44 @@
         
         for (let i = 0; i < hand.length; i++) {
             for (let j = i + 1; j < hand.length; j++) {
-                if(hand[i].card == hand[j].card) {
+                if(hand[i].card == hand[j].card && firstPair.length == 0) {
                     hand[i].isPair = true;
                     hand[j].isPair = true;
+                    hand[i].isFirstPair = true;
+                    hand[j].isFirstPair = true;
+                    hand[i].isSecondPair = false;
+                    hand[j].isSecondPair = false;
+                    firstPair.push(hand[i]);
+                    firstPair.push(hand[j]);
+                } else if (hand[i].card == hand[j].card && firstPair.length >= 2 && firstPair.length <= 3 && secondPair.length <= 3) {
+                    hand[i].isPair = true;
+                    hand[j].isPair = true;
+                    hand[i].isSecondPair = true;
+                    hand[j].isSecondPair = true;
+                    hand[i].isFirstPair = false;
+                    hand[j].isFirstPair = false;
+                    secondPair.push(hand[i]);
+                    secondPair.push(hand[j]);
+                    
                 }
-            }
+            } 
         }
-        
-        for (let i = 0; i < hand.length; i++) {
-            if(hand[i].isPair == true) {
-                pairsArr.push(hand[i]); 
-            }
 
+        if (firstPair.length > 0) {
+            hand.handPairs.push(firstPair);
         }
+        if (secondPair.length > 0) {
+            hand.handPairs.push(secondPair);
+        }
+
+    }
+        
+        // for (let i = 0; i < hand.length; i++) {
+        //     if(hand[i].isPair == true) {
+        //         pairsArr.push(hand[i]); 
+        //     }
+
+        // }
         
         // for (let j = 0; j < pairsArr.length; j++){
         //     if(pairsArr.length == 5){
@@ -169,14 +194,9 @@
         //     }
         //     } 
         // }
-        // if (firstPair.length > 0) {
-        //     hand.handPairs.push(firstPair);
-        // }
-        // if (secondPair.length > 0) {
-        //     hand.handPairs.push(secondPair);
-        // }
+        
 
-    };
+    // };
 
     const loop = hand => {
     for (let i = 0; i < hand.length; i++) {
