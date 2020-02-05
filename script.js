@@ -1,7 +1,7 @@
-    const suits = ['spade', 'heart', 'diamond', 'club'];
-    const cards = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
-    // const suits = ['diamond', 'club', 'heart'];
-    // const cards = ['10', 'J', '2', '3', '4',];
+    // const suits = ['spade', 'heart', 'diamond', 'club'];
+    // const cards = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
+    const suits = ['diamond', 'club', 'heart'];
+    const cards = ['10', 'J', '2', '3', '4','5', '6',];
     
     const indexGeneration = cardType => {
         return Math.round(0.5 + Math.random() * cardType.length - 1);
@@ -122,20 +122,24 @@
         for (let j = 0; j < pairsArr.length; j++){
             if(pairsArr.length == 5){
                 if(pairsArr[1].card == pairsArr[2].card){
-                    if(j < 3) {
-                        pairsArr[j].isFirstPair = true;
-                        pairsArr[j].isSecondPair = false;
-                        firstPair.push(pairsArr[j]);
+                    if(j <= 2) {
+                        if(j < 2) {
+                            pairsArr[j].isFirstPair = true;
+                            pairsArr[j].isSecondPair = false;
+                            firstPair.push(pairsArr[j]);
+                        }
                     } else{
                         pairsArr[j].isFirstPair = false;
                         pairsArr[j].isSecondPair = true; 
                         secondPair.push(pairsArr[j]);
                     }
                 }else{
-                    if(j >= 3) {
-                        pairsArr[j].isFirstPair = false;
-                        pairsArr[j].isSecondPair = true;
-                        secondPair.push(pairsArr[j]);
+                    if(j >= 2) {
+                        if (j > 2){
+                            pairsArr[j].isFirstPair = false;
+                            pairsArr[j].isSecondPair = true;
+                            secondPair.push(pairsArr[j]);
+                        }
                     } else{
                         pairsArr[j].isFirstPair = true;
                         pairsArr[j].isSecondPair = false; 
@@ -158,9 +162,11 @@
             else 
             
             if(pairsArr.length <= 3) {
+                if(j < 2){
                 pairsArr[j].isFirstPair = true;
                 pairsArr[j].isSecondPair = false;
                 firstPair.push(pairsArr[j]);
+            }
             } 
         }
         if (firstPair.length > 0) {
