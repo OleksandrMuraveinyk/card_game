@@ -30,8 +30,6 @@ const handsGeneration = (suits, cards, cardQuantity) => {
         } else {
             allHands.push(anyCard);
         }
-
-
     }
 
     cardPropertiesCleaning();
@@ -60,7 +58,8 @@ const handDetermination = (allHands, sliceStart, sliceEnd) => {
 
 };
 
-const pairingDetecting = oneOfHands => {
+const pairingDetecting = handForClone => {
+    const oneOfHands = { ...handForClone };
     const handsCards = oneOfHands.hand;
     handsCards.sort((a, b) => a.card > b.card ? 1 : -1);
 
@@ -84,16 +83,15 @@ const pairingDetecting = oneOfHands => {
 };
 
 const pairSeparation = anyHand => {
+    const { pairCombination } = anyHand;
     let firstPair;
     let secondPair;
-    if (anyHand.pairCombination.length <= 3) {
-        firstPair = anyHand.pairCombination.slice(0, 2);
-        firstPair.forEach(elem => elem.isFirstPair = true);
-    } else if (anyHand.pairCombination.length >= 4) {
-        firstPair = anyHand.pairCombination.slice(0, 2);
-        firstPair.forEach(elem => elem.isFirstPair = true);
-        secondPair = anyHand.pairCombination.reverse().slice(0, 2);
-        secondPair.forEach(elem => elem.isSecondPair = true);
+
+    if (pairCombination.length <= 3) {
+        firstPair = pairCombination.slice(0, 2).map(elem => elem.isFirstPair = true);
+    } else if (pairCombination.length >= 4) {
+        firstPair = pairCombination.slice(0, 2).map(elem => elem.isFirstPair = true);
+        secondPair = pairCombination.reverse().slice(0, 2).map(elem => elem.isSecondPair = true);
     }
 
     anyHand.pairCombination.forEach(elem => {
@@ -103,6 +101,7 @@ const pairSeparation = anyHand => {
     })
 
     return anyHand;
+
 };
 
 const winnerDetecting = (handUno, handDue) => {
@@ -111,7 +110,6 @@ const winnerDetecting = (handUno, handDue) => {
     } else if (handDue.pairCombination.length > handUno.pairCombination.length) {
         handDue.isWinner = true;
     }
-
 };
 
 const handsRendering = (oneOfHands, handName, identificator) => {
@@ -164,7 +162,6 @@ const cardRendering = (oneOfHands, handName, identificator, playerSection, first
         console.log(winningClassName);
         winingSection.classList.add(winningClassName);
     }
-
 };
 
 const handsSetGeneration = () => {
@@ -175,9 +172,6 @@ const handsSetGeneration = () => {
     const handOne = handDetermination(allHands, 0, 5);
     const handTwo = handDetermination(allHands, 5);
 
-    console.log(handOne);
-    console.log(handTwo);
-
     const handOneForManipulation = pairingDetecting(handOne);
     const handTwoForManipulation = pairingDetecting(handTwo);
 
@@ -185,9 +179,6 @@ const handsSetGeneration = () => {
     const handTwoSeparatedPairs = pairSeparation(handTwoForManipulation);
 
     winnerDetecting(handOneSeparatedPairs, handTwoSeparatedPairs);
-
-    console.log(handOneSeparatedPairs);
-    console.log(handTwoSeparatedPairs);
 
     handsRendering(handOneSeparatedPairs, 'handOne', 'one');
     handsRendering(handTwoSeparatedPairs, 'handTwo', 'two');
