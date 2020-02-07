@@ -95,7 +95,7 @@ const pairSeparation = anyHand => {
     }
 
     anyHand.pairCombination.forEach(elem => {
-        if (elem.isFirstPair === false && elem.isSecondPair === false) {
+        if (!(elem.isFirstPair && elem.isSecondPair)) {
             anyHand.pairCombination.pop(elem);
         }
     })
@@ -188,22 +188,3 @@ const buttonClick = document.querySelector('.buttons');
 buttonClick.addEventListener('click', handsSetGeneration);
 
 
-// const pairSeparation = anyHand => {
-//     const { pairCombination } = anyHand;
-//     let firstPair = [];
-//     let secondPair = [];
-
-//     if (pairCombination.length <= 3) {
-//         firstPair = pairCombination.slice(0, 2).map(elem => elem.isFirstPair = true);
-//     } else if (pairCombination.length >= 4) {
-//         firstPair = pairCombination.slice(0, 2).map(elem => elem.isFirstPair = true);
-//         secondPair = pairCombination.reverse().slice(0, 2).map(elem => elem.isSecondPair = true);
-//     }
-
-//     const cp = pairCombination.filter(pair => {
-//         console.log('pair', pair);
-//         return pair.isFirstPair && pair.isSecondPair;
-//     });
-
-//     return { ...anyHand, pairCombination: cp };
-// };
